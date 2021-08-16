@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("userService")
+@Service
 public class UserService implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
-
     @Override
     public List<User> getAll() {
         return userMapper.getAll();
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userMapper.findByUsername(username);
     }
 }

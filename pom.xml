@@ -15,6 +15,7 @@
         <module>manager-web</module>
         <module>zuul-server</module>
         <module>sso-server</module>
+        <module>user-server</module>
     </modules>
 
     <!--spring boot-->
@@ -39,11 +40,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
         </dependency>
     </dependencies>
 

@@ -14,9 +14,11 @@
         <result column="created" property="created" jdbcType="DATE" />
         <result column="updated" property="updated" jdbcType="DATE" />
     </resultMap>
+
     <select id="getItemList" resultMap="BaseResultMap">
         select * from item
     </select>
+
     <select id="getItemById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select * from item where id=#{itemId}
     </select>

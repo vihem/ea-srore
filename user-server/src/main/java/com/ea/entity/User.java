@@ -1,4 +1,4 @@
-package com.ea.vo;
+package com.ea.entity;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class UserVO implements Serializable {
+public class User implements Serializable {
     private Long id;
     private String username;
     private String password;

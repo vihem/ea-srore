@@ -20,15 +20,15 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ea.web"))
+                .apis(RequestHandlerSelectors.basePackage("com.ea.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ea-store-manager-web")
-                .description("ea-store-manager-web 操作文档")
+                .title("ea-store-user")
+                .description("ea-store-user 操作文档")
 //                .termsOfServiceUrl("")
                 .version("1.0")
                 // 创建人信息
