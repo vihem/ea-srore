@@ -1,6 +1,6 @@
 package com.ea.client;
 
-import com.ea.entity.User;
+import com.ea.vo.UserVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,5 +10,5 @@ import java.util.List;
 public interface UserClientFeign {
 
     @GetMapping("/all")
-    List<User> getAll();
+    List<UserVO> getAll();
 }

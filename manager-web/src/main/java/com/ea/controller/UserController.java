@@ -1,4 +1,4 @@
-package com.ea.web;
+package com.ea.controller;
 
 import com.ea.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ea.mapper.ItemMapper" >
+    <resultMap id="BaseResultMap" type="com.ea.entity.Item">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="sellPoint" property="sellPoint" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="BIGINT" />
+        <result column="num" property="num" jdbcType="BIGINT" />
+        <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="cid" property="cid" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="created" property="created" jdbcType="DATE" />
+        <result column="updated" property="updated" jdbcType="DATE" />
+    </resultMap>
+    <select id="getItemList" resultMap="BaseResultMap">
+        select * from item
+    </select>
+    <select id="getItemById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select * from item where id=#{itemId}
+    </select>
+
+
+</mapper>
