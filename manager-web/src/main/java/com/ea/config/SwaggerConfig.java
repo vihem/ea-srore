@@ -27,12 +27,12 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("ea-store-manager")
-                .description("ea-store-manager 操作文档")
+                .title("ea-store-manager-web")
+                .description("ea-store-manager-web 操作文档")
 //                .termsOfServiceUrl("")
                 .version("1.0")
                 // 创建人信息
-                .contact(new Contact("ea商城", "http://localhost:8080/","yeasue@qq.com"))
+//                .contact(new Contact("ea商城", "http://localhost:8080/","yeasue@qq.com"))
                 .build();
     }
 }

@@ -18,6 +18,7 @@ public class PageHelperConfig {
     //spring容器自动配置
     @Bean
     public PageHelper pageHelper(){
+//        Properties properties = new Properties();
         PageHelper pageHelper = new PageHelper();
         properties.setProperty("offsetAsPageNum", "true");
         properties.setProperty("rowBoundsWithCount", "true");

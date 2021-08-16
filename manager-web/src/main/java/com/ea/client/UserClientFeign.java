@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(value = "MANAGER")
+@FeignClient(value = "manager")
 public interface UserClientFeign {
 
-    @GetMapping("/all")
+    @GetMapping("/user/all")
     List<UserVO> getAll();
 }
