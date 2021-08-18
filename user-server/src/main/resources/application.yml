@@ -1,0 +1,50 @@
+server:
+  port: 7001
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: com.ea.entity
+
+spring:
+  application:
+    name: user-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/ea_store?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    cache: false
+    mode: HTML
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    enabled: true
+#  jpa:
+#    database: mysql
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5Dialect
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  page-size-zero: true
+  params: count=countSql
+  support-methods-arguments: true
+
+logging:
+  level:
+    io:
+      swagger:
+        models:
+          parameters:
+            AbstractSerializableParameter: error

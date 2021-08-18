@@ -13,6 +13,7 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public List<User> getAll() {
         return userMapper.getAll();

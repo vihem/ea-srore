@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ea.mapper.UserMapper" >
-    <select id="getAll" resultType="com.ea.entity.User">
-        select * from user
+    <!-- resultMap:映射实体类和字段之间的一一对应的关系 -->
+    <resultMap id="userResMap" type="com.ea.entity.User">
+        <id column="uid" property="uid" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="TINYINT" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="created" property="created" jdbcType="DATE" />
+        <result column="updated" property="updated" jdbcType="DATE" />
+    </resultMap>
+    <resultMap id="permissionResMap" type="com.ea.entity.SysPermission">
+        <id property="pid" column="pid" />
+        <result property="name" column="name" />
+        <result property="resourceType" column="resource_type" />
+        <result property="url" column="url" />
+        <result property="permission" column="permission" />
+        <result property="parentId" column="parent_id" />
+        <result property="parentIds" column="parent_ids" />
+        <result property="available" column="available" />
+    </resultMap>
+    <resultMap id="roleResMap" type="com.ea.entity.SysRole">
+        <id property="rid" column="rid" />
+        <result property="role" column="role" />
+        <result property="description" column="description" />
+        <result property="available" column="available" />
+        <!-- 多对多关联映射：collection -->
+        <collection property="permissions" resultMap="permissionResMap" />
+    </resultMap>
+    <resultMap id="userRoleResMap" type="com.ea.entity.User" extends="userResMap">
+        <!-- 多对多关联映射：collection -->
+        <collection property="roleList" resultMap="roleResMap" />
+    </resultMap>
+
+    <sql id="userCol" >
+        u.uid, u.username, u.password, u.salt, u.state, u.phone, u.email, u.created, u.updated
+    </sql>
+    <sql id="roleCol" >
+        r.rid, r.role, r.description, r.available
+    </sql>
+    <sql id="permissionCol" >
+        p.pid, p.name, p.resource_type, p.url, p.permission, p.parent_id, p.parent_ids, p.available
+    </sql>
+
+    <select id="getAll" resultMap="userResMap">
+        select <include refid="userCol" /> from user u
     </select>
 
-    <select id="findByUsername" parameterType="java.lang.String"
-            resultType="com.ea.entity.User">
-        select * from user where username=#{username}
+    <select id="findByUsername" parameterType="java.lang.String" resultMap="userRoleResMap">
+        select
+               <include refid="userCol" />,
+               <include refid="roleCol" />,
+               <include refid="permissionCol" />
+        from user u,sys_user_role ur, sys_role r, sys_role_permission rp, sys_permission p
+        where u.uid = ur.uid and r.rid = ur.rid and r.rid = rp.rid and rp.pid = p.pid
+        and username=#{username}
     </select>
 
+    <select id="getUserRole" resultMap="userRoleResMap" >
+        select
+               <include refid="userCol" />,
+               <include refid="roleCol" />,
+        from user u,sys_user_role ur, sys_role r
+        where u.uid = ur.uid and r.rid = ur.rid
+    </select>
 </mapper>
