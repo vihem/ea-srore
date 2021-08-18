@@ -2,7 +2,6 @@ package com.ea.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +20,6 @@ public class User implements Serializable {
     private String email;
     private Date created;
     private Date updated;
-
-//    @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
-//    @JoinTable(name = "SysUserRole", joinColumns = { @JoinColumn(name = "uid") }, inverseJoinColumns ={@JoinColumn(name = "roleId") })
     private List<SysRole> roleList;// 一个用户具有多个角色
 
     /**
