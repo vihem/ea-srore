@@ -1,5 +1,6 @@
 package com.ea.controller;
 
+import com.ea.entity.User;
 import com.ea.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,13 @@ public class UserController {
     @ApiOperation(value = "根据名字获取用户信息")
     public Object getByUsername(String username){
         return userService.findByUsername(username);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @ApiOperation("注册新用户")
+    public Object register(String username, String password, String phone, String email){
+        return userService.addUser(new User(username,password,phone,email));
     }
 
     /**

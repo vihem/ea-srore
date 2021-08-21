@@ -3,6 +3,7 @@
 <configuration>
     <typeAliases>
         <package name="com.ea.entity"/>
+        <package name="java.lang"/>
     </typeAliases>
 
 <!--    <environments default="development">-->

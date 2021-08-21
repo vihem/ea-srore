@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ea.mapper.SysRoleMapper" >
+    <resultMap id="roleResMap" type="com.ea.entity.SysRole">
+        <id property="rid" column="rid" />
+        <result property="role" column="role" />
+        <result property="description" column="description" />
+        <result property="available" column="available" />
+    </resultMap>
+    <sql id="roleCol" >
+        r.rid, r.role, r.description, r.available
+    </sql>
+    <select id="findByRole" parameterType="java.lang.String" resultMap="roleResMap">
+        select <include refid="roleCol" /> from sys_role r where r.role=#{role}
+    </select>
+
+</mapper>

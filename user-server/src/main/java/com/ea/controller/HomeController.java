@@ -12,7 +12,6 @@ import java.util.Map;
 
 @Controller
 @Api(value = "Home", protocols = "http")
-//@RequestMapping("/home")
 public class HomeController {
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
@@ -20,7 +19,7 @@ public class HomeController {
         return "/index";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(HttpServletRequest request, Map<String, Object> map){
         System.out.println(" ^^ HomeController.login()");
         // 登录失败从request中获取shiro处理的异常信息

@@ -50,6 +50,10 @@
         select <include refid="userCol" /> from user u
     </select>
 
+    <select id="getOneByUsername" parameterType="java.lang.String" resultMap="userResMap">
+        select <include refid="userCol" /> from user u where username=#{username}
+    </select>
+
     <select id="findByUsername" parameterType="java.lang.String" resultMap="userRoleResMap">
         select
                <include refid="userCol" />,
@@ -60,11 +64,22 @@
         and username=#{username}
     </select>
 
-    <select id="getUserRole" resultMap="userRoleResMap" >
+    <select id="getUserRoles" resultMap="userRoleResMap" >
         select
                <include refid="userCol" />,
                <include refid="roleCol" />,
         from user u,sys_user_role ur, sys_role r
         where u.uid = ur.uid and r.rid = ur.rid
     </select>
+
+    <insert id="insertUser" parameterType="com.ea.entity.User" useGeneratedKeys="true" keyProperty="uid">
+<!--        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="uid">-->
+<!--            select last_insert_id()-->
+<!--        </selectKey>-->
+        insert into user(username, password, salt, state, phone, email, created, updated)
+        values (#{username}, #{password}, #{salt}, #{state}, #{phone}, #{email}, #{created}, #{updated})
+    </insert>
+    <insert id="insertUserRole" parameterType="java.lang.Long">
+        insert into sys_user_role(uid, rid) values (#{uid}, #{rid})
+    </insert>
 </mapper>

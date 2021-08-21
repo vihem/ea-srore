@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Ê×ÏÈÒªÅäÖÃµÄÊÇShiroConfigÀà£¬Apache Shiro ºËĞÄÍ¨¹ı Filter À´ÊµÏÖ£¬¾ÍºÃÏñSpringMvc Í¨¹ıDispatchServlet À´Ö÷¿ØÖÆÒ»Ñù¡£
- * ¼ÈÈ»ÊÇÊ¹ÓÃ Filter Ò»°ãÒ²¾ÍÄÜ²Âµ½£¬ÊÇÍ¨¹ıURL¹æÔòÀ´½øĞĞ¹ıÂËºÍÈ¨ÏŞĞ£Ñé£¬ËùÒÔÎÒÃÇĞèÒª¶¨ÒåÒ»ÏµÁĞ¹ØÓÚURLµÄ¹æÔòºÍ·ÃÎÊÈ¨ÏŞ¡£
+ * é¦–å…ˆè¦é…ç½®çš„æ˜¯ShiroConfigç±»ï¼ŒApache Shiro æ ¸å¿ƒé€šè¿‡ Filter æ¥å®ç°ï¼Œå°±å¥½åƒSpringMvc é€šè¿‡DispatchServlet æ¥ä¸»æ§åˆ¶ä¸€æ ·ã€‚
+ * æ—¢ç„¶æ˜¯ä½¿ç”¨ Filter ä¸€èˆ¬ä¹Ÿå°±èƒ½çŒœåˆ°ï¼Œæ˜¯é€šè¿‡URLè§„åˆ™æ¥è¿›è¡Œè¿‡æ»¤å’Œæƒé™æ ¡éªŒï¼Œæ‰€ä»¥æˆ‘ä»¬éœ€è¦å®šä¹‰ä¸€ç³»åˆ—å…³äºURLçš„è§„åˆ™å’Œè®¿é—®æƒé™ã€‚
  */
 @Configuration
 public class ShiroConfig {
@@ -37,21 +37,21 @@ public class ShiroConfig {
     }
 
     /**
-     * Æ¾Ö¤Æ¥ÅäÆ÷
-     * £¨ÓÉÓÚÎÒÃÇµÄÃÜÂëĞ£Ñé½»¸øShiroµÄSimpleAuthenticationInfo½øĞĞ´¦ÀíÁË£©
+     * å‡­è¯åŒ¹é…å™¨
+     * ï¼ˆç”±äºæˆ‘ä»¬çš„å¯†ç æ ¡éªŒäº¤ç»™Shiroçš„SimpleAuthenticationInfoè¿›è¡Œå¤„ç†äº†ï¼‰
      */
     @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(){
         System.out.println(" *3* ShiroConfig.hashedCredentialsMatcher");
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");//É¢ÁĞËã·¨:ÕâÀïÊ¹ÓÃMD5Ëã·¨;
-        hashedCredentialsMatcher.setHashIterations(2);//É¢ÁĞµÄ´ÎÊı£¬±ÈÈçÉ¢ÁĞÁ½´Î£¬Ïàµ±ÓÚ md5(md5(""));
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");//æ•£åˆ—ç®—æ³•:è¿™é‡Œä½¿ç”¨MD5ç®—æ³•;
+        hashedCredentialsMatcher.setHashIterations(2);//æ•£åˆ—çš„æ¬¡æ•°ï¼Œæ¯”å¦‚æ•£åˆ—ä¸¤æ¬¡ï¼Œç›¸å½“äº md5(md5(""));
         return hashedCredentialsMatcher;
     }
 
     /**
-     *  ¿ªÆôshiro aop×¢½âÖ§³Ö.
-     *  Ê¹ÓÃ´úÀí·½Ê½;ËùÒÔĞèÒª¿ªÆô´úÂëÖ§³Ö;
+     *  å¼€å¯shiro aopæ³¨è§£æ”¯æŒ.
+     *  ä½¿ç”¨ä»£ç†æ–¹å¼;æ‰€ä»¥éœ€è¦å¼€å¯ä»£ç æ”¯æŒ;
      * @param securityManager securityManager
      */
     @Bean
@@ -68,20 +68,20 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
-        // À¹½ØÆ÷/¹ıÂËÁ´ -- ÅäÖÃ²»»á±»À¹½ØµÄÁ´½Ó Ë³ĞòÅĞ¶Ï
-        // ¹ıÂËÁ´¶¨Òå£¬´ÓÉÏÏòÏÂË³ĞòÖ´ĞĞ£¬Ò»°ã½«/**·ÅÔÚ×îÎªÏÂ±ß -->:ÕâÊÇÒ»¸ö¿ÓÄØ£¬Ò»²»Ğ¡ĞÄ´úÂë¾Í²»ºÃÊ¹ÁË;
-        //  1¡¢Ò»¸öURL¿ÉÒÔÅäÖÃ¶à¸öFilter£¬Ê¹ÓÃ¶ººÅ·Ö¸ô
-        //  2¡¢µ±ÉèÖÃ¶à¸ö¹ıÂËÆ÷Ê±£¬È«²¿ÑéÖ¤Í¨¹ı£¬²ÅÊÓÎªÍ¨¹ı
-        //  3¡¢²¿·Ö¹ıÂËÆ÷¿ÉÖ¸¶¨²ÎÊı£¬Èçperms£¬roles
-        // authc:ËùÓĞurl¶¼±ØĞëÈÏÖ¤Í¨¹ı²Å¿ÉÒÔ·ÃÎÊ; anon:ËùÓĞurl¶¼¶¼¿ÉÒÔÄäÃû·ÃÎÊ; user:ÅäÖÃ¼Ç×¡ÎÒ»òÈÏÖ¤Í¨¹ı¿ÉÒÔ·ÃÎÊ µÈ
+        // æ‹¦æˆªå™¨/è¿‡æ»¤é“¾ -- é…ç½®ä¸ä¼šè¢«æ‹¦æˆªçš„é“¾æ¥ é¡ºåºåˆ¤æ–­
+        // è¿‡æ»¤é“¾å®šä¹‰ï¼Œä»ä¸Šå‘ä¸‹é¡ºåºæ‰§è¡Œï¼Œä¸€èˆ¬å°†/**æ”¾åœ¨æœ€ä¸ºä¸‹è¾¹ -->:è¿™æ˜¯ä¸€ä¸ªå‘å‘¢ï¼Œä¸€ä¸å°å¿ƒä»£ç å°±ä¸å¥½ä½¿äº†;
+        //  1ã€ä¸€ä¸ªURLå¯ä»¥é…ç½®å¤šä¸ªFilterï¼Œä½¿ç”¨é€—å·åˆ†éš”
+        //  2ã€å½“è®¾ç½®å¤šä¸ªè¿‡æ»¤å™¨æ—¶ï¼Œå…¨éƒ¨éªŒè¯é€šè¿‡ï¼Œæ‰è§†ä¸ºé€šè¿‡
+        //  3ã€éƒ¨åˆ†è¿‡æ»¤å™¨å¯æŒ‡å®šå‚æ•°ï¼Œå¦‚permsï¼Œroles
+        // authc:æ‰€æœ‰urléƒ½å¿…é¡»è®¤è¯é€šè¿‡æ‰å¯ä»¥è®¿é—®; anon:æ‰€æœ‰urléƒ½éƒ½å¯ä»¥åŒ¿åè®¿é—®; user:é…ç½®è®°ä½æˆ‘æˆ–è®¤è¯é€šè¿‡å¯ä»¥è®¿é—® ç­‰
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/logout", "logout");//ÅäÖÃÍË³ö ¹ıÂËÆ÷,ÆäÖĞµÄ¾ßÌåµÄÍË³ö´úÂëShiroÒÑ¾­ÌæÎÒÃÇÊµÏÖÁË
+        filterChainDefinitionMap.put("/logout", "logout");//é…ç½®é€€å‡º è¿‡æ»¤å™¨,å…¶ä¸­çš„å…·ä½“çš„é€€å‡ºä»£ç Shiroå·²ç»æ›¿æˆ‘ä»¬å®ç°äº†
         filterChainDefinitionMap.put("/**", "authc");
 
-        shiroFilterFactoryBean.setLoginUrl("/login");// Èç¹û²»ÉèÖÃÄ¬ÈÏ»á×Ô¶¯Ñ°ÕÒWeb¹¤³Ì¸ùÄ¿Â¼ÏÂµÄ"/login.jsp"Ò³Ãæ
-        shiroFilterFactoryBean.setSuccessUrl("/index");// µÇÂ¼³É¹¦ºóÒªÌø×ªµÄÁ´½Ó
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");//Î´ÊÚÈ¨½çÃæ;
+        shiroFilterFactoryBean.setLoginUrl("/login");// å¦‚æœä¸è®¾ç½®é»˜è®¤ä¼šè‡ªåŠ¨å¯»æ‰¾Webå·¥ç¨‹æ ¹ç›®å½•ä¸‹çš„"/login.jsp"é¡µé¢
+        shiroFilterFactoryBean.setSuccessUrl("/index");// ç™»å½•æˆåŠŸåè¦è·³è½¬çš„é“¾æ¥
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");//æœªæˆæƒç•Œé¢;
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -93,8 +93,8 @@ public class ShiroConfig {
         SimpleMappingExceptionResolver resolver = new SimpleMappingExceptionResolver();
 
         Properties mappings = new Properties();
-        mappings.setProperty("DatabaseException", "databaseError");//Êı¾İ¿âÒì³£´¦Àí
-        mappings.setProperty("UnauthorizedException", "403"); //Î´¾­ÊÚÈ¨Òì³£
+        mappings.setProperty("DatabaseException", "databaseError");//æ•°æ®åº“å¼‚å¸¸å¤„ç†
+        mappings.setProperty("UnauthorizedException", "403"); //æœªç»æˆæƒå¼‚å¸¸
 
         resolver.setExceptionMappings(mappings);  // None by default
         resolver.setDefaultErrorView("error");    // No default
